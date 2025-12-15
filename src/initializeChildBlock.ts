@@ -4,7 +4,10 @@ import { State } from "./State";
 
 export type ChildType = Node | string | State | ControlFlow;
 export function initializeChildBlock(element: Element, children: ChildType[]) {
-	for (const child of resolveTextNode(children)) {
+	const resolvedChildren = resolveTextNode(children);
+	connectNeighbours(resolvedChildren);
+
+	for (const child of resolvedChildren) {
 		initializeChild(element, child);
 	}
 }

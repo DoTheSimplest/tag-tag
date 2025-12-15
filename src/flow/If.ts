@@ -1,3 +1,4 @@
+import { getNextNodeSibling } from "../initializeChildBlock";
 import type { State } from "../State";
 import { ControlFlow } from "./ControlFlow";
 
@@ -25,22 +26,26 @@ export class IfFlow extends ControlFlow {
 	}
 
 	run(element: Element) {
-		const previous = element.lastChild;
 		let child: Element;
 		let elseChild: Element | undefined;
 
 		const update = () => {
+			// next node might not be added to parent on init process
+			const nextInVirtual = getNextNodeSibling(this);
+			const next = nextInVirtual?.parentElement ? nextInVirtual : null;
+
 			if (this.#condition.get()) {
 				if (!child) child = this.#createThen();
 
+				this.nodes = [child];
 				elseChild?.remove();
-				element.insertBefore(child, previous?.nextSibling as null);
+				element.insertBefore(child, next);
 			} else {
 				if (!elseChild) elseChild = this.#createElse?.();
 
+				this.nodes = [elseChild].filter((n) => n) as Element[];
 				child?.remove();
-				elseChild &&
-					element.insertBefore(elseChild, previous?.nextSibling as null);
+				elseChild && element.insertBefore(elseChild, next);
 			}
 		};
 
