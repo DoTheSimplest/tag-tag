@@ -34,3 +34,16 @@ function initializeChild(element: Element, child: ChildType) {
 		element.appendChild(child);
 	}
 }
+
+export function resolveTextNode(children: ChildType[]) {
+	return children.map((c) => {
+		if (typeof c === "string" || c instanceof State) {
+			const textNode = document.createTextNode("");
+			applyStringOrState(c, (text) => {
+				textNode.textContent = text;
+			});
+			return textNode;
+		}
+		return c;
+	});
+}
