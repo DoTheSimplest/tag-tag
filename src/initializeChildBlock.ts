@@ -17,7 +17,7 @@ function initializeChild(element: Element, child: ControlFlow | Node) {
 	}
 }
 
-export function resolveTextNode(children: ChildType[]) {
+export function resolveTextNode(children: ChildType[]): (Node | ControlFlow)[] {
 	return children.map((c) => {
 		if (typeof c === "string" || c instanceof State) {
 			const textNode = document.createTextNode("");
