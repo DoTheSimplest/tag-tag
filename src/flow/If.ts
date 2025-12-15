@@ -1,4 +1,5 @@
-import type { State } from '../State';
+import type { State } from "../State";
+import { ControlFlow } from "./ControlFlow";
 
 export function If(
 	condition: State<boolean>,
@@ -7,7 +8,7 @@ export function If(
 ) {
 	return new IfFlow(condition, show, showElse);
 }
-export class IfFlow {
+export class IfFlow extends ControlFlow {
 	#condition: State<boolean>;
 	#createThen: () => Element;
 	#createElse?: () => Element;
@@ -17,6 +18,7 @@ export class IfFlow {
 		create: () => Element,
 		createElse?: () => Element,
 	) {
+		super();
 		this.#condition = condition;
 		this.#createThen = create;
 		this.#createElse = createElse;
@@ -44,6 +46,6 @@ export class IfFlow {
 
 		update();
 
-		this.#condition.on('change', update);
+		this.#condition.on("change", update);
 	}
 }
