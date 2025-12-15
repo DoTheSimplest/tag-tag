@@ -50,3 +50,8 @@ export function getNextNodeSiblingVirtual(flow: ControlFlow) {
 	if (next.nodes[0]) return next.nodes[0];
 	return getNextNodeSiblingVirtual(next);
 }
+
+export function getNextNodeSibling(flow: ControlFlow) {
+	const virtual = getNextNodeSiblingVirtual(flow);
+	return virtual?.parentElement ? virtual : null;
+}
