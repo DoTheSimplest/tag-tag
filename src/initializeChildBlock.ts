@@ -1,31 +1,16 @@
-import { ForMap } from "./flow/For";
-import { IfFlow } from "./flow/If";
-import { SwitchFlow } from "./flow/Switch";
+import { ControlFlow } from "./flow/ControlFlow";
 import { applyStringOrState } from "./Modify";
 import { State } from "./State";
 
-export type ChildType =
-	| Node
-	| string
-	| State
-	| ForMap<any>
-	| IfFlow
-	| SwitchFlow<any>;
+export type ChildType = Node | string | State | ControlFlow;
 export function initializeChildBlock(element: Element, children: ChildType[]) {
 	for (const child of resolveTextNode(children)) {
 		initializeChild(element, child);
 	}
 }
 
-function initializeChild(
-	element: Element,
-	child: ForMap<any> | IfFlow | SwitchFlow<any> | Node,
-) {
-	if (child instanceof ForMap) {
-		child.run(element);
-	} else if (child instanceof IfFlow) {
-		child.run(element);
-	} else if (child instanceof SwitchFlow) {
+function initializeChild(element: Element, child: ControlFlow | Node) {
+	if (child instanceof ControlFlow) {
 		child.run(element);
 	} else {
 		element.appendChild(child);
