@@ -21,6 +21,7 @@
     "test:browser": "vitest"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.8",
     "@vitest/browser-playwright": "^4.0.15",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
