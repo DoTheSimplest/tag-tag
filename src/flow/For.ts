@@ -1,4 +1,5 @@
 import type { State } from "../State";
+import { ControlFlow } from "./ControlFlow";
 
 export function For<T>(
 	array: State<readonly T[]>,
@@ -7,11 +8,13 @@ export function For<T>(
 	return new ForMap(array, map);
 }
 
-export class ForMap<T> {
+export class ForMap<T> extends ControlFlow {
 	constructor(
 		private list: State<readonly T[]>,
 		private map: (value: T) => Node | string,
-	) {}
+	) {
+		super();
+	}
 
 	run(element: Element) {
 		const model2View = new Map<T, Node>();
