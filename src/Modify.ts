@@ -1,7 +1,5 @@
-import { ForMap } from './flow/For';
-import { IfFlow } from './flow/If';
-import { SwitchFlow } from './flow/Switch';
-import { State } from './State';
+import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
+import type { State } from "./State";
 
 type EventListenerType<
 	TEventType2Event,
@@ -36,14 +34,6 @@ type ElementPropertyInitializer<TEventType2Event> = {
 	$$?: $Record;
 };
 
-export type ChildType =
-	| Node
-	| string
-	| State
-	| ForMap<any>
-	| IfFlow
-	| SwitchFlow<any>;
-
 export type ElementInitializer<
 	TElement,
 	TEventType2Event = HTMLElementEventMap,
@@ -52,36 +42,18 @@ export type ElementInitializer<
 	| ChildType[]
 	| ((element: TElement) => void);
 
-function initializeChild(element: Element, child: ChildType) {
-	if (typeof child === 'string' || child instanceof State) {
-		const textNode = document.createTextNode('');
-		element.appendChild(textNode);
-		applyStringOrState(child, (text) => {
-			textNode.textContent = text;
-		});
-	} else if (child instanceof ForMap) {
-		child.run(element);
-	} else if (child instanceof IfFlow) {
-		child.run(element);
-	} else if (child instanceof SwitchFlow) {
-		child.run(element);
-	} else {
-		element.appendChild(child);
-	}
-}
-
-function applyStringOrState(
+export function applyStringOrState(
 	value: string | State,
 	initialize: (text: string) => void,
 ) {
-	if (typeof value === 'string') {
+	if (typeof value === "string") {
 		initialize(value);
 	} else {
 		const update = () => {
 			initialize(value.get());
 		};
 		update();
-		value.on('change', update);
+		value.on("change", update);
 	}
 }
 
@@ -166,7 +138,7 @@ function initializeEventListeners<TEventType2Event>(
 		const type = eventName as keyof TEventType2Event;
 		const listener = on[type];
 		if (!listener) continue;
-		if (typeof listener === 'function') {
+		if (typeof listener === "function") {
 			element.addEventListener(eventName, listener as EventListener);
 		} else {
 			element.addEventListener(
@@ -184,10 +156,8 @@ function initialize<TElement extends Element, TEventType2Event>(
 ) {
 	if (!element) return;
 	if (Array.isArray(initializer)) {
-		for (const child of initializer) {
-			initializeChild(element, child);
-		}
-	} else if (typeof initializer === 'function') {
+		initializeChildBlock(element, initializer);
+	} else if (typeof initializer === "function") {
 		initializer(element);
 	} else {
 		initializeHtml(element, initializer.html);
@@ -206,7 +176,7 @@ export function Modify<T extends Element>(
 	...initializers: ElementInitializer<T>[]
 ) {
 	const element =
-		typeof elementOrSelector === 'string'
+		typeof elementOrSelector === "string"
 			? (document.querySelector(elementOrSelector) as T)
 			: elementOrSelector;
 	for (const initializer of initializers) {
