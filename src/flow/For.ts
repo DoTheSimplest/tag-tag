@@ -32,7 +32,7 @@ export class ForMap<T> extends ControlFlow {
 			// UIs to remove
 			const viewsToRemove = [] as Node[];
 			const listSet = new Set<T>(this.list.get());
-			for (const view of element.childNodes) {
+			for (const view of view2Model.keys()) {
 				const oldItem = view2Model.get(view);
 				if (oldItem && !listSet.has(oldItem)) viewsToRemove.push(view);
 			}
@@ -55,8 +55,9 @@ export class ForMap<T> extends ControlFlow {
 			}
 
 			// Sort
-			for (const child of [...element.childNodes]) {
-				child.remove();
+			for (const child of [...view2Model.keys()]) {
+				// child might not be appended yet. (so we need `?`)
+				child.parentElement?.removeChild(child);
 			}
 
 			for (const model of this.list.get()) {
