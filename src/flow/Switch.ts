@@ -35,18 +35,31 @@ export class SwitchFlow<T> extends ControlFlow {
 		}
 
 		let currentElement: Element | undefined;
-		const update = () => {
-			const value = this.#value.get();
-			const section = value2Section.get(value);
-			const nextNode = getNextNodeSibling(this);
+		let defaultElement: Element | undefined;
 
-			// If element is not created yet, create and cache
-			if (!value2Element.has(value)) {
-				const newElement = section?.show() ?? this.#createDefault?.();
-				newElement && value2Element.set(value, newElement);
+		const getElementFromValue = (value: T) => {
+			const section = value2Section.get(value);
+			if (section) {
+				// If element is not created yet, create and cache
+				if (!value2Element.has(value)) {
+					const newElement = section.show();
+					value2Element.set(value, newElement);
+				}
+				return value2Element.get(value)!;
 			}
 
-			const newElement = value2Element.get(value);
+			// ensure default
+			if (this.#createDefault && !defaultElement) {
+				defaultElement = this.#createDefault();
+			}
+			return defaultElement;
+		};
+
+		const update = () => {
+			const value = this.#value.get();
+			const nextNode = getNextNodeSibling(this);
+
+			const newElement = getElementFromValue(value);
 			currentElement?.remove();
 			newElement && element.insertBefore(newElement, nextNode);
 			currentElement = newElement;
