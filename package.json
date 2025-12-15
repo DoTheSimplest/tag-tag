@@ -1,0 +1,22 @@
+{
+  "name": "tag-tag",
+  "version": "1.0.0",
+  "description": "Lightweight helper for vanilla `HTMLElement`.",
+  "keywords": [
+    "vanilla"
+  ],
+  "homepage": "https://github.com/DoTheSimplest/tag-tag#readme",
+  "bugs": {
+    "url": "https://github.com/DoTheSimplest/tag-tag/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoTheSimplest/tag-tag.git"
+  },
+  "author": "do-the-simplest",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
