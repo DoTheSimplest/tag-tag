@@ -1,5 +1,5 @@
 import { ControlFlow } from "./flow/ControlFlow";
-import { applyStringOrState, node2Data, node2DataCallbacks } from "./Modify";
+import { applyStringOrState, nodeData } from "./Modify";
 import { State } from "./State";
 
 export type ChildType = Node | string | State | ControlFlow;
@@ -12,18 +12,11 @@ export function initializeChildBlock(element: Element, children: ChildType[]) {
 	}
 }
 
-function resolveDataCallback(element: Element, child: Node) {
-	for (const key in node2DataCallbacks.get(child)) {
-		const callback = node2DataCallbacks.get(child)![key];
-		callback(node2Data.get(element)?.[key]);
-	}
-}
-
 function initializeChild(element: Element, child: ControlFlow | Node) {
 	if (child instanceof ControlFlow) {
 		child.run(element);
 	} else {
-		resolveDataCallback(element, child);
+		nodeData.resolveDataCallback(element, child);
 		element.appendChild(child);
 	}
 }

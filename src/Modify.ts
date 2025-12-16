@@ -1,3 +1,4 @@
+import { NodeData } from "./data";
 import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
 import type { State } from "./State";
 
@@ -148,26 +149,16 @@ function initializeEventListeners<TEventType2Event>(
 	}
 }
 
-export const node2Data = new Map<Node, Record<string, any>>();
-export const node2DataCallbacks = new Map<
-	Node,
-	Record<string, (data: any) => void>
->();
+export const nodeData = new NodeData();
 function initializeData(element: Element, data: DataRecord | undefined) {
 	for (const key in data) {
 		const value = data[key];
 		if (typeof value === "function") {
-			if (!node2DataCallbacks.has(element)) {
-				node2DataCallbacks.set(element, {});
-			}
-			node2DataCallbacks.get(element)![key] = value;
-			const selfValue = node2Data.get(element)?.[key];
+			nodeData.setCallback(element, key, value);
+			const selfValue = nodeData.getData(element, key);
 			selfValue && value(selfValue);
 		} else {
-			if (!node2Data.has(element)) {
-				node2Data.set(element, {});
-			}
-			node2Data.get(element)![key] = value;
+			nodeData.setData(element, key, value);
 		}
 	}
 }
