@@ -1,4 +1,4 @@
-import { NodeData } from "./data";
+import { type DataRecord, initializeData } from "./data";
 import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
 import type { State } from "./State";
 
@@ -21,7 +21,6 @@ type $Record = Record<
 	ElementInitializer<Element, HTMLElementEventMap | SVGElementEventMap>
 >;
 
-type DataRecord = Record<string, ((value: any) => void) | any>;
 type ElementPropertyInitializer<TEventType2Event> = {
 	html?: string | State;
 	text?: string | State;
@@ -145,20 +144,6 @@ function initializeEventListeners<TEventType2Event>(
 				listener.listener as EventListener,
 				listener.options,
 			);
-		}
-	}
-}
-
-export const nodeData = new NodeData();
-function initializeData(element: Element, data: DataRecord | undefined) {
-	for (const key in data) {
-		const value = data[key];
-		if (typeof value === "function") {
-			nodeData.setCallback(element, key, value);
-			const selfValue = nodeData.getData(element, key);
-			selfValue && value(selfValue);
-		} else {
-			nodeData.setData(element, key, value);
 		}
 	}
 }

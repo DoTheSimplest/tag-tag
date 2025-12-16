@@ -30,3 +30,18 @@ export class NodeData {
 		}
 	}
 }
+
+export type DataRecord = Record<string, ((value: any) => void) | any>;
+export const nodeData = new NodeData();
+export function initializeData(element: Element, data: DataRecord | undefined) {
+	for (const key in data) {
+		const value = data[key];
+		if (typeof value === "function") {
+			nodeData.setCallback(element, key, value);
+			const selfValue = nodeData.getData(element, key);
+			selfValue && value(selfValue);
+		} else {
+			nodeData.setData(element, key, value);
+		}
+	}
+}

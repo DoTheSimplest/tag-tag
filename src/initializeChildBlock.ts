@@ -1,5 +1,6 @@
+import { nodeData } from "./data";
 import { ControlFlow } from "./flow/ControlFlow";
-import { applyStringOrState, nodeData } from "./Modify";
+import { applyStringOrState } from "./Modify";
 import { State } from "./State";
 
 export type ChildType = Node | string | State | ControlFlow;
