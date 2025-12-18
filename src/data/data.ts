@@ -148,3 +148,13 @@ export function appendCallbacksRecord(
 		record1[key].push(...record2[key]);
 	}
 }
+
+export function findData(node: Node | null, key: string) {
+	if (!node) return;
+
+	const record = nodeData.node2Data.get(node);
+	if (record && key in record) {
+		return record[key];
+	}
+	return findData(node.parentElement, key);
+}
