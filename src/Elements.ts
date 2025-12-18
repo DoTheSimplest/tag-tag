@@ -64,7 +64,7 @@ export function td(
 	return Html("td", ...initializers);
 }
 
-export function Bold(...initializers: ElementInitializer<HTMLElement>[]) {
+export function b(...initializers: ElementInitializer<HTMLElement>[]) {
 	return Html("b", ...initializers);
 }
 
