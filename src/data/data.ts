@@ -4,7 +4,7 @@ export class NodeData {
 	node2Data = new WeakMap<Node, Record<string, any>>();
 
 	addCallbacks(
-		element: Element,
+		element: Node,
 		callbackRecord: Record<string, DataCallback[]> | undefined,
 	) {
 		if (!callbackRecord) return;
@@ -17,18 +17,18 @@ export class NodeData {
 		resolveCallbacksByData(originalCallbackRecord, dataRecord);
 	}
 
-	setDataRecord(element: Element, dataRecord: Record<string, any> | undefined) {
+	setDataRecord(element: Node, dataRecord: Record<string, any> | undefined) {
 		dataRecord && this.node2Data.set(element, dataRecord);
 	}
 
-	resolveCallbacks(element: Element, child: Node) {
+	resolveCallbacks(element: Node, child: Node) {
 		/**
 		 * Bubble up callbacks record until it reaches root.
 		 * if it finds data, call callbacks and remove them.
 		 * if it reaches root, append root callbacks
 		 */
 		const bubbleUp = (
-			ancestor: Element,
+			ancestor: Node,
 			callbacksRecord: Record<string, DataCallback[]>,
 		) => {
 			resolveCallbacksByData(callbacksRecord, this.node2Data.get(ancestor));
@@ -83,7 +83,7 @@ function resolveCallbacksByData(
 
 export type DataRecord = Record<string, DataCallback | any>;
 export const nodeData = new NodeData();
-export function initializeData(element: Element, data: DataRecord | undefined) {
+export function initializeData(element: Node, data: DataRecord | undefined) {
 	nodeData.addCallbacks(element, extractCallbackRecord(data));
 	nodeData.setDataRecord(element, extractDataValueRecord(data));
 }
