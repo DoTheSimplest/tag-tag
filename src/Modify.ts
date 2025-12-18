@@ -88,7 +88,7 @@ function initializeHtml(element: Element, html: string | State | undefined) {
 	}
 }
 
-function initializeText(element: Element, text: string | State | undefined) {
+function initializeText(element: Node, text: string | State | undefined) {
 	if (text !== undefined) {
 		applyStringOrState(text, (text) => {
 			element.textContent = text;
@@ -127,7 +127,7 @@ function initializeAttributes(
 }
 
 function initializeProps(
-	element: Element,
+	element: Node,
 	prop: Record<string, any | State> | undefined,
 ) {
 	for (const key in prop) {
@@ -155,7 +155,7 @@ function initialize$$(element: Element, $$: $Record | undefined) {
 }
 
 function initializeEventListeners<TEventType2Event>(
-	element: Element,
+	element: Node,
 	on: EventListenerRecord<TEventType2Event> | undefined,
 ) {
 	for (const eventName in on) {
