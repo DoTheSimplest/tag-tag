@@ -60,6 +60,14 @@ describe("data", () => {
 });
 
 describe(NodeData, () => {
+	it.skip("descendant callbacks with single node", () => {
+		const nodes = [Div()];
+		const data = new NodeData();
+		const callback = () => {};
+		data.setCallbackRecord(nodes[0], { theme: callback });
+		assert(data.getDescendantCallbacks(nodes[0]));
+	});
+
 	it("getDescendantCallbacks", () => {
 		const nodes = [Div(), Div()];
 
