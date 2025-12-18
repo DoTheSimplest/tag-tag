@@ -1,6 +1,6 @@
 export class NodeData {
-	node2Data = new Map<Node, Record<string, any>>();
-	node2DataCallbacks = new Map<Node, Record<string, (data: any) => void>>();
+	node2Data = new WeakMap<Node, Record<string, any>>();
+	node2DataCallbacks = new WeakMap<Node, Record<string, (data: any) => void>>();
 
 	setCallback(element: Element, key: string, callback: (data: any) => void) {
 		if (!this.node2DataCallbacks.has(element)) {
@@ -42,7 +42,7 @@ export class NodeData {
 		}
 	}
 
-	node2DescendantCallbacks = new Map<
+	node2DescendantCallbacks = new WeakMap<
 		Node,
 		Record<string, ((data: any) => void)[]>
 	>();
