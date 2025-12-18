@@ -38,6 +38,7 @@ export type ElementInitializer<
 	TElement,
 	TEventType2Event = HTMLElementEventMap,
 > =
+	| string
 	| ElementPropertyInitializer<TEventType2Event>
 	| ChildType[]
 	| ((element: TElement) => void);
@@ -183,7 +184,9 @@ function initialize<TElement extends Element, TEventType2Event>(
 	initializer: ElementInitializer<TElement, TEventType2Event>,
 ) {
 	if (!element) return;
-	if (Array.isArray(initializer)) {
+	if (typeof initializer === "string") {
+		initializeText(element, initializer);
+	} else if (Array.isArray(initializer)) {
 		initializeChildBlock(element, initializer);
 	} else if (typeof initializer === "function") {
 		initializer(element);
