@@ -1,3 +1,4 @@
+import { nodeData } from "../data";
 import { getNextNodeSibling } from "../initializeChildBlock";
 import type { State } from "../State";
 import { ControlFlow } from "./ControlFlow";
@@ -35,12 +36,18 @@ export class IfFlow extends ControlFlow {
 			if (this.#condition.get()) {
 				if (!child) child = this.#createThen();
 
+				// data
+				nodeData.resolveCallbacks(element, child);
+				// insert `child`
 				this.firstNode = child;
 				elseChild?.remove();
 				element.insertBefore(child, next);
 			} else {
 				if (!elseChild) elseChild = this.#createElse?.();
 
+				// data
+				elseChild && nodeData.resolveCallbacks(element, elseChild);
+				// insert `elseChild`
 				this.firstNode = elseChild ?? null;
 				child?.remove();
 				elseChild && element.insertBefore(elseChild, next);
