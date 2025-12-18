@@ -26,7 +26,7 @@ type ElementPropertyInitializer<TEventType2Event> = {
 	html?: string | State;
 	text?: string | State | Binding;
 	attr?: Record<string, string | State | Binding>;
-	prop?: Record<string, any | State>;
+	prop?: Record<string, any | State | Binding>;
 	css?: Record<string, string | State | Binding>;
 	on?: EventListenerRecord<TEventType2Event>;
 	$?: $Record;
@@ -129,11 +129,11 @@ function initializeAttributes(
 
 function initializeProps(
 	element: Node,
-	prop: Record<string, any | State> | undefined,
+	prop: Record<string, any | State | Binding> | undefined,
 ) {
 	for (const key in prop) {
 		const value = prop[key];
-		applyStringOrState(value, (resolvedValue) => {
+		applyStringOrStateOrBinding(element, value, (resolvedValue) => {
 			(element as any)[key] = resolvedValue;
 		});
 	}

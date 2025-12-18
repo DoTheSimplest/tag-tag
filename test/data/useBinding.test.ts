@@ -60,4 +60,20 @@ describe("useBinding", () => {
 		theme.set("light");
 		expect(child.classList.toString()).toBe("light-mode");
 	});
+
+	it("prop, State", () => {
+		const theme = useState("dark");
+
+		const child = Div({
+			prop: {
+				textContent: useBinding("theme", (theme) =>
+					theme === "dark" ? "Dark" : "Light",
+				),
+			},
+		});
+		Div({ data: { theme } }, [child]);
+		expect(child.textContent).toBe("Dark");
+		theme.set("light");
+		expect(child.textContent).toBe("Light");
+	});
 });
