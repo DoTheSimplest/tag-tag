@@ -1,17 +1,21 @@
+type DataCallback = (data: any) => void;
 export class NodeData {
 	node2Data = new WeakMap<Node, Record<string, any>>();
-	node2DataCallbacks = new WeakMap<Node, Record<string, (data: any) => void>>();
 
 	setCallbackRecord(
 		element: Element,
-		callbackRecord: Record<string, (data: any) => void> | undefined,
+		callbackRecord: Record<string, DataCallback[]> | undefined,
 	) {
-		callbackRecord && this.node2DataCallbacks.set(element, callbackRecord);
+		if (callbackRecord) {
+			this.node2DescendantCallbacks.set(element, { ...callbackRecord });
+		}
 
 		const dataRecord = this.node2Data.get(element);
 		for (const key in dataRecord) {
 			if (key in dataRecord) {
-				callbackRecord?.[key](dataRecord[key]);
+				for (const callback of callbackRecord?.[key] ?? []) {
+					callback(dataRecord[key]);
+				}
 			}
 		}
 	}
@@ -25,30 +29,49 @@ export class NodeData {
 	}
 
 	resolveCallbacks(element: Element, child: Node) {
-		for (const key in this.node2DataCallbacks.get(child)) {
-			const callback = this.node2DataCallbacks.get(child)![key];
-			const data = this.node2Data.get(element)?.[key];
-			if (data !== undefined) {
-				callback(data);
-			}
-		}
+		/**
+		 * bubble up callbacks record until it reaches root.
+		 * if it finds data, call callbacks and remove them.
+		 * if it reaches root, append root callbacks
+		 */
+		const bubbleUp = (
+			ancestor: Element,
+			callbacksRecord: Record<string, DataCallback[]>,
+		) => {
+			const dataRecord = this.node2Data.get(ancestor);
 
-		if (this.node2DataCallbacks.has(child)) {
-			const newRecord = {} as Record<string, ((data: any) => void)[]>;
-			const source = this.node2DataCallbacks.get(child);
-			for (const key in source) {
-				if (!newRecord[key]) {
-					newRecord[key] = [];
+			for (const key in dataRecord) {
+				if (key in callbacksRecord) {
+					for (const callback of callbacksRecord[key]) {
+						callback(dataRecord[key]);
+					}
+
+					delete callbacksRecord[key];
 				}
-				newRecord[key].push(source[key]);
 			}
-			this.node2DescendantCallbacks.set(element, newRecord);
+
+			// root
+			if (!ancestor.parentElement) {
+				if (!this.node2DescendantCallbacks.has(ancestor)) {
+					this.node2DescendantCallbacks.set(ancestor, {});
+				}
+				const rootCallbacks = this.node2DescendantCallbacks.get(ancestor);
+				rootCallbacks && appendCallbacksRecord(rootCallbacks, callbacksRecord);
+				return;
+			}
+
+			bubbleUp(ancestor.parentElement, callbacksRecord);
+		};
+
+		const callbacks = this.node2DescendantCallbacks.get(child);
+		if (callbacks) {
+			bubbleUp(element, callbacks);
 		}
 	}
 
 	node2DescendantCallbacks = new WeakMap<
 		Node,
-		Record<string, ((data: any) => void)[]>
+		Record<string, DataCallback[]>
 	>();
 
 	getDescendantCallbacks(node: Node) {
@@ -65,10 +88,11 @@ export function initializeData(element: Element, data: DataRecord | undefined) {
 
 export function extractCallbackRecord(
 	record: DataRecord | undefined,
-): Record<string, (data: any) => void> | undefined {
+): Record<string, ((data: any) => void)[]> | undefined {
 	return extractRecordFromDataRecord(
 		record,
 		(value) => typeof value === "function",
+		(callback) => [callback],
 	);
 }
 

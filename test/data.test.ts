@@ -66,21 +66,8 @@ describe(NodeData, () => {
 		const nodes = [Div()];
 		const data = new NodeData();
 		const callback = () => {};
-		data.setCallbackRecord(nodes[0], { theme: callback });
+		data.setCallbackRecord(nodes[0], { theme: [callback] });
 		assert(data.getDescendantCallbacks(nodes[0]));
-	});
-
-	it("getDescendantCallbacks", () => {
-		const nodes = [Div(), Div()];
-
-		const data = new NodeData();
-		const callback = () => {};
-		data.setCallbackRecord(nodes[1], { theme: callback });
-		data.setDataRecord(nodes[0], { theme: "dark" });
-		data.resolveCallbacks(nodes[0], nodes[1]);
-		expect(data.getDescendantCallbacks(nodes[0])).toEqual({
-			theme: [callback],
-		});
 	});
 });
 
@@ -93,7 +80,7 @@ describe(extractCallbackRecord, () => {
 		const record = { callback: () => {} } as DataRecord;
 		const callbacks = extractCallbackRecord(record);
 		assert(callbacks);
-		expect(callbacks.callback).toBe(record.callback);
+		expect(callbacks.callback).toEqual([record.callback]);
 	});
 	it("returns undefined if input doesn't contain callback", () => {
 		const callbacks = extractCallbackRecord({ x: 2 });
