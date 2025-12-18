@@ -6,7 +6,7 @@ export function button(
 ) {
 	return Html("button", ...initializers);
 }
-export function Span(...initializers: ElementInitializer<HTMLSpanElement>[]) {
+export function span(...initializers: ElementInitializer<HTMLSpanElement>[]) {
 	return Html("span", ...initializers);
 }
 

@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { button, FlexDiv, Span, Style } from "../../src/Elements";
+import { button, FlexDiv, span, Style } from "../../src/Elements";
 import { Modify } from "../../src/Modify";
 import { FromStates, useState } from "../../src/State";
 
@@ -19,7 +19,7 @@ describe("getting started", () => {
 
 		Modify(document.body, { html: "" }, [
 			button("-", { on: { click: decrementCount } }),
-			Span(count),
+			span(count),
 			button("+", { on: { click: incrementCount } }),
 		]);
 	});

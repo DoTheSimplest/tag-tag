@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { button, FlexDiv, Input, Span } from "../../src/Elements";
+import { button, FlexDiv, Input, span } from "../../src/Elements";
 import { If } from "../../src/flow/If";
 import { Switch } from "../../src/flow/Switch";
 import { Modify } from "../../src/Modify";
@@ -23,7 +23,7 @@ describe("control-flow", () => {
 					css: { background: "blue", width: "300px", height: "300px" },
 				}),
 			),
-			Span("Check to show rectangle"),
+			span("Check to show rectangle"),
 		]);
 	});
 
@@ -47,7 +47,7 @@ describe("control-flow", () => {
 					}),
 				() => FlexDiv("No rectangle"),
 			),
-			Span("Check to show rectangle"),
+			span("Check to show rectangle"),
 		]);
 	});
 
