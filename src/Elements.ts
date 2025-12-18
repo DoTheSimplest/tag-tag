@@ -132,8 +132,6 @@ export function tbody(
 	return Html("tbody", ...initializers);
 }
 
-export function HorizontalRule(
-	...initializers: ElementInitializer<HTMLHRElement>[]
-) {
+export function hr(...initializers: ElementInitializer<HTMLHRElement>[]) {
 	return Html("hr", ...initializers);
 }
