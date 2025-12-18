@@ -110,3 +110,15 @@ export function createDescendantCallbacks(
 		(value) => [value],
 	);
 }
+
+export function appendCallbacksRecord(
+	record1: Record<string, ((data: any) => void)[]>,
+	record2: Record<string, ((data: any) => void)[]> | undefined,
+) {
+	for (const key in record2) {
+		if (!record1[key]) {
+			record1[key] = [];
+		}
+		record1[key].push(...record2[key]);
+	}
+}
