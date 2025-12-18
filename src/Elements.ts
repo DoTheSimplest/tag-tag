@@ -58,7 +58,7 @@ export function tr(...initializers: ElementInitializer<HTMLTableRowElement>[]) {
 	return Html("tr", ...initializers);
 }
 
-export function TableData(
+export function td(
 	...initializers: ElementInitializer<HTMLTableCellElement>[]
 ) {
 	return Html("td", ...initializers);
