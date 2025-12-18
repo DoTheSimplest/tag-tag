@@ -82,3 +82,19 @@ export function extractCallbackRecord(record: DataRecord | undefined) {
 
 	return result;
 }
+
+export function extractDataValueRecord(record: DataRecord | undefined) {
+	if (!record) return;
+
+	const result = {} as Record<string, (value: any) => void>;
+	for (const key in record) {
+		const value = record[key];
+		if (typeof value !== "function") {
+			result[key] = value;
+		}
+	}
+
+	if (!Object.keys(result).length) return;
+
+	return result;
+}

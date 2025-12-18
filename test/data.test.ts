@@ -1,6 +1,11 @@
 import { assert, describe, expect, it } from "vitest";
 import { Div } from "../src";
-import { type DataRecord, extractCallbackRecord, NodeData } from "../src/data";
+import {
+	type DataRecord,
+	extractCallbackRecord,
+	extractDataValueRecord,
+	NodeData,
+} from "../src/data";
 
 describe("data", () => {
 	it("get data from self", () => {
@@ -83,5 +88,22 @@ describe(extractCallbackRecord, () => {
 	it("returns undefined if input doesn't contain callback", () => {
 		const callbacks = extractCallbackRecord({ x: 2 });
 		expect(callbacks).toBeUndefined();
+	});
+});
+
+describe(extractDataValueRecord, () => {
+	it("returns undefined if input is undefined", () => {
+		const actual = extractDataValueRecord(undefined);
+		expect(actual).toBeUndefined();
+	});
+	it("extracts functions from object", () => {
+		const actual = extractDataValueRecord({ callback: () => {} });
+		expect(actual).toBeUndefined();
+	});
+	it("returns undefined if input doesn't contain callback", () => {
+		const record = { x: 2 } as DataRecord;
+		const actual = extractDataValueRecord(record);
+		assert(actual);
+		expect(actual.callback).toBe(record.callback);
 	});
 });
