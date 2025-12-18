@@ -1,8 +1,8 @@
 import { assert, describe, it } from "vitest";
 import { Div, If, useState } from "../../src";
 
-describe("data with control-flow", () => {
-	it(`supports ${If.name}`, () => {
+describe(`data with ${If.name}`, () => {
+	it(`calls callbacks when condition becomes true`, () => {
 		let theme1: string | undefined;
 		const condition = useState(false);
 		Div({ data: { theme: "dark" } }, [
@@ -23,7 +23,7 @@ describe("data with control-flow", () => {
 		assert.equal(theme1, "dark");
 	});
 
-	it(`supports else in ${If.name}`, () => {
+	it(`calls callbacks for \`else\` when condition becomes false`, () => {
 		let theme1: string | undefined;
 		const condition = useState(true);
 		Div({ data: { theme: "dark" } }, [
