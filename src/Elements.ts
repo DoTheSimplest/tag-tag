@@ -90,9 +90,7 @@ export function ol(...initializers: ElementInitializer<HTMLOListElement>[]) {
 	return Html("ol", ...initializers);
 }
 
-export function UnorderedList(
-	...initializers: ElementInitializer<HTMLUListElement>[]
-) {
+export function ul(...initializers: ElementInitializer<HTMLUListElement>[]) {
 	return Html("ul", ...initializers);
 }
 
