@@ -65,7 +65,7 @@ export function initializeData(element: Element, data: DataRecord | undefined) {
 
 export function extractCallbackRecord(
 	record: DataRecord | undefined,
-): Record<string, () => void> | undefined {
+): Record<string, (data: any) => void> | undefined {
 	return extractRecordFromDataRecord(
 		record,
 		(value) => typeof value === "function",
