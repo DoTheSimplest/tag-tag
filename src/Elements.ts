@@ -44,7 +44,7 @@ export function select(
 	return Html("select", ...initializers);
 }
 
-export function SelectOption(
+export function option(
 	...initializers: ElementInitializer<HTMLOptionElement>[]
 ) {
 	return Html("option", ...initializers);

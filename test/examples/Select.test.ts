@@ -4,19 +4,15 @@ import {
 	For,
 	input,
 	Modify,
+	option,
 	select,
-	SelectOption,
 	useState,
 } from "../../src";
 
 describe(select, () => {
 	it("<option> simplest", () => {
 		Modify(document.body, { html: "" }, [
-			select([
-				SelectOption(["Apple"]),
-				SelectOption(["Orange"]),
-				SelectOption(["Banana"]),
-			]),
+			select([option(["Apple"]), option(["Orange"]), option(["Banana"])]),
 		]);
 	});
 
@@ -45,8 +41,8 @@ describe(select, () => {
 		Modify(document.body, { html: "" }, [
 			select(
 				[
-					SelectOption({ prop: { value: "" } }, ["-- choose an item --"]),
-					For(items, (item) => SelectOption([item])),
+					option({ prop: { value: "" } }, ["-- choose an item --"]),
+					For(items, (item) => option([item])),
 				],
 				{
 					prop: { value: selectedValue },
