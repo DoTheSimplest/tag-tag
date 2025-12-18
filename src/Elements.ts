@@ -38,7 +38,7 @@ export function input(...initializers: ElementInitializer<HTMLInputElement>[]) {
 	return Html("input", ...initializers);
 }
 
-export function Select(
+export function select(
 	...initializers: ElementInitializer<HTMLSelectElement>[]
 ) {
 	return Html("select", ...initializers);
