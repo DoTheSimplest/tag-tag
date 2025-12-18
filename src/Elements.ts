@@ -82,7 +82,7 @@ export function blockquote(
 	return Html("blockquote", ...initializers);
 }
 
-export function ListItem(...initializers: ElementInitializer<HTMLLIElement>[]) {
+export function li(...initializers: ElementInitializer<HTMLLIElement>[]) {
 	return Html("li", ...initializers);
 }
 
