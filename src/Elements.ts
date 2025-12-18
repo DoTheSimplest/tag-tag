@@ -106,7 +106,7 @@ export function img(...initializers: ElementInitializer<HTMLImageElement>[]) {
 	return Html("img", ...initializers);
 }
 
-export function Canvas(
+export function canvas(
 	...initializers: ElementInitializer<HTMLCanvasElement>[]
 ) {
 	return Html("canvas", ...initializers);
