@@ -9,21 +9,21 @@ describe("For", () => {
 	});
 
 	it("adds and removes item", () => {
-		const numbers = useState([1, 2, 3]);
+		const numbers = useState([1, 2, 3].map((n) => ({ n })));
 
 		function addNumber() {
 			const newNumber = numbers.get().length + 1;
-			numbers.set([...numbers.get(), newNumber]);
+			numbers.set([...numbers.get(), { n: newNumber }]);
 		}
 		function removeNumber(n: number) {
-			numbers.set(numbers.get().filter((value) => value !== n));
+			numbers.set(numbers.get().filter((value) => value.n !== n));
 		}
 
 		Modify(document.body, { html: "" }, [
 			FlexDiv([
 				For(numbers, (n) =>
-					Button([`${n}`], {
-						on: { click: () => removeNumber(n) },
+					Button(`${n.n}`, {
+						on: { click: () => removeNumber(n.n) },
 					}),
 				),
 			]),
