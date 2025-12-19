@@ -17,25 +17,27 @@ document.body.appendChild(myButton);
 
 with reactivity!
 
-```html
-<script type="module">
-import {button, span, Modify, useState} from "https://cdn.jsdelivr.net/npm/tagu-tagu@1.0.1/dist/bundle.min.js";
+```javascript
+import {button, span, div, useState} from "https://cdn.jsdelivr.net/npm/tagu-tagu@1.0.4/dist/bundle.min.js";
 
-const count = useState(4);
+function CounterDemo(){
+    const count = useState(4);
 
-function decrementCount() {
-    count.set(count.get() - 1);
+    function decrementCount() {
+        count.set(count.get() - 1);
+    }
+    function incrementCount() {
+        count.set(count.get() + 1);
+    }
+
+    return div([
+        button("-", { on: { click: decrementCount } }),// `HTMLButtonElement`
+        span(count),// `HTMLSpanElement`
+        button("+", { on: { click: incrementCount } }),// `HTMLButtonElement`
+    ])
 }
-function incrementCount() {
-    count.set(count.get() + 1);
-}
 
-Modify(document.body, [
-    button("-", { on: { click: decrementCount } }),// `HTMLButtonElement`
-    span(count),// `HTMLSpanElement`
-    button("+", { on: { click: incrementCount } }),// `HTMLButtonElement`
-]);
-</script>
+document.body.appendChild(CounterDemo());
 ```
 
 No need to compile. But typescript is supported.
