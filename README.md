@@ -121,3 +121,31 @@ Modify(document.body [
 ]);
 
 ```
+
+### Data binding
+You can use data of ancestors.
+
+```typescript
+import { button, div, Modify, useBinding, useState } from "tagu-tagu";
+
+function Sky() {
+	return div("Sky", {
+		css: {
+			background: useBinding("theme", (theme) =>
+				theme === "dark" ? "darkblue" : "skyblue",
+			),
+		},
+	});
+}
+
+const theme = useState("dark" as "dark" | "light");
+
+Modify(document.body, [
+	div({ data: { theme } }, [
+		Sky(),
+		button("dark", { on: { click: () => theme.set("dark") } }),
+		button("light", { on: { click: () => theme.set("light") } }),
+	]),
+]);
+
+```
