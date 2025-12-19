@@ -5,13 +5,13 @@
 	"keywords": [
 		"vanilla"
 	],
-	"homepage": "https://github.com/DoTheSimplest/tag-tag#readme",
+	"homepage": "https://github.com/DoTheSimplest/tagu-tagu#readme",
 	"bugs": {
-		"url": "https://github.com/DoTheSimplest/tag-tag/issues"
+		"url": "https://github.com/DoTheSimplest/tagu-tagu/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/DoTheSimplest/tag-tag.git"
+		"url": "git+https://github.com/DoTheSimplest/tagu-tagu.git"
 	},
 	"author": "DoTheSimmplest",
 	"type": "module",
