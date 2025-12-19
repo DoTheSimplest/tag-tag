@@ -42,6 +42,13 @@ No need to compile. But typescript is supported.
 
 ## Features
 
+### Initializers
+`tagu-tagu` uses rest parameters. Arguments can be any order.
+```typescript
+button("Hello!", {css: {background: "blue"}});
+button({css: {background: "blue"}}, "Hello!");
+```
+
 ### `If`
 
 ```typescript
