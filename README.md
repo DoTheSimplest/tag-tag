@@ -66,3 +66,30 @@ Modify(document.body, [
 	span("Check to show rectangle"),
 ]);
 ```
+
+### `Switch`
+
+```typescript
+import { button, div, Modify, Switch, useState } from "tagu-tagu";
+
+const state = useState(
+	"triangle" as "triangle" | "rectangle" | "circle" | "pentagon",
+);
+
+Modify(document.body, [
+	button("Triangle", { on: { click: () => state.set("triangle") } }),
+	button("Rectangle", { on: { click: () => state.set("rectangle") } }),
+	button("Circle", { on: { click: () => state.set("circle") } }),
+	button("Pentagon", { on: { click: () => state.set("pentagon") } }),
+	Switch(
+		state,
+		[
+			{ case: "triangle", show: () => div("▲") },
+			{ case: "rectangle", show: () => div("■") },
+			{ case: "circle", show: () => div("●") },
+		],
+		() => div("?"),
+	),
+]);
+
+```
