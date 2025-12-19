@@ -39,3 +39,30 @@ Modify(document.body, [
 ```
 
 No need to compile. But typescript is supported.
+
+## Features
+
+### `If`
+
+```typescript
+import { div, If, input, Modify, span, useState } from "tagu-tagu";
+
+const isDisplayed = useState(false);
+
+function toggle() {
+	isDisplayed.set(!isDisplayed.get());
+}
+
+Modify(document.body, [
+	input({
+		attr: { type: "checkbox", checked: isDisplayed },
+		on: { click: toggle },
+	}),
+	If(isDisplayed, () =>
+		div({
+			css: { background: "blue", width: "300px", height: "300px" },
+		}),
+	),
+	span("Check to show rectangle"),
+]);
+```
