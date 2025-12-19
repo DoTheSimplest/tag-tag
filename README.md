@@ -37,3 +37,5 @@ Modify(document.body, [
 ]);
 </script>
 ```
+
+No need to compile. But typescript is supported.
