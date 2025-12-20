@@ -1,14 +1,14 @@
 import { assert, describe, it } from "vitest";
-import { div, ForMap, useState } from "../../src";
+import { div, For, useState } from "../../src";
 
-describe(ForMap, () => {
+describe(For, () => {
 	it("number objs to children", () => {
 		const parent = div();
 		const modelArray = [1, 2, 3].map((n) => ({ n })) as {
 			n: number;
 		}[];
 		const modelArrayState = useState(modelArray as readonly { n: number }[]);
-		const forMap = new ForMap(modelArrayState, (n) => `${n.n}`);
+		const forMap = For(modelArrayState, (n) => `${n.n}`);
 		forMap.run(parent);
 		assert.deepEqual(
 			[...parent.childNodes].map((n) => n.textContent),
@@ -22,7 +22,7 @@ describe(ForMap, () => {
 			n: number;
 		}[];
 		const modelArrayState = useState(modelArray as readonly { n: number }[]);
-		const forMap = new ForMap(modelArrayState, (n) => `${n.n}`);
+		const forMap = For(modelArrayState, (n) => `${n.n}`);
 		forMap.run(parent);
 		modelArrayState.set(modelArray.sort((a, b) => b.n - a.n));
 		assert.deepEqual(
@@ -37,7 +37,7 @@ describe(ForMap, () => {
 			n: number;
 		}[];
 		const modelArrayState = useState(modelArray as readonly { n: number }[]);
-		const forMap = new ForMap(modelArrayState, (n) => `${n.n}`);
+		const forMap = For(modelArrayState, (n) => `${n.n}`);
 		forMap.run(parent);
 		const initialChildNodes = [...parent.childNodes];
 		modelArray.push({ n: 4 });
@@ -55,7 +55,7 @@ describe(ForMap, () => {
 			n: number;
 		}[];
 		const modelArrayState = useState(modelArray as readonly { n: number }[]);
-		const forMap = new ForMap(modelArrayState, (n) => `${n.n}`);
+		const forMap = For(modelArrayState, (n) => `${n.n}`);
 		forMap.run(parent);
 		modelArray.splice(1);
 		modelArrayState.set(modelArray);
@@ -71,7 +71,7 @@ describe(ForMap, () => {
 			n: number;
 		}[];
 		const modelArrayState = useState(modelArray as readonly { n: number }[]);
-		const forMap = new ForMap(modelArrayState, (n) => `${n.n}`);
+		const forMap = For(modelArrayState, (n) => `${n.n}`);
 		forMap.run(parent);
 		modelArray.splice(1);
 		modelArrayState.set([5, 9, 2].map((n) => ({ n })));
