@@ -1,10 +1,13 @@
-export function useBinding<T>(key: string, map: (value: T) => string) {
+export function useBinding<T, TResult>(
+	key: string,
+	map: (value: T) => TResult,
+) {
 	return new Binding(key, map);
 }
 
-export class Binding<T = any> {
+export class Binding<T = any, TResult = any> {
 	constructor(
 		public key: string,
-		public map: (value: T) => string,
+		public map: (value: T) => TResult,
 	) {}
 }
