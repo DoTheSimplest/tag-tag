@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { button, FlexDiv, For, Modify, useState } from "../../src";
+import { button, div, For, Modify, useState } from "../../src";
 
 describe("For", () => {
 	it("shows children from data", () => {
@@ -10,17 +10,18 @@ describe("For", () => {
 
 	it("adds and removes item", () => {
 		const numbers = useState([1, 2, 3].map((n) => ({ n })));
+		let id = numbers.get().length;
 
 		function addNumber() {
-			const newNumber = numbers.get().length + 1;
-			numbers.set([...numbers.get(), { n: newNumber }]);
+			id++;
+			numbers.set([...numbers.get(), { n: id }]);
 		}
 		function removeNumber(n: number) {
 			numbers.set(numbers.get().filter((value) => value.n !== n));
 		}
 
 		Modify(document.body, { html: "" }, [
-			FlexDiv([
+			div([
 				For(numbers, (n) =>
 					button(`${n.n}`, {
 						on: { click: () => removeNumber(n.n) },
