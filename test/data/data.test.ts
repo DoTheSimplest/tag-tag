@@ -147,4 +147,28 @@ describe("data", () => {
 		]);
 		assert.equal(counter, 2);
 	});
+
+	it("get function from parent", () => {
+		let counter = 0;
+		div(
+			{
+				data: {
+					onClick: () => {
+						console.log("call");
+						counter++;
+					},
+				},
+			},
+			[
+				div((node) => {
+					waitForData(node, {
+						onClick: (func) => {
+							func();
+						},
+					});
+				}),
+			],
+		);
+		assert.equal(counter, 1);
+	});
 });

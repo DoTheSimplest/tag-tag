@@ -1,4 +1,4 @@
-import { type DataRecord, initializeData } from "./data/data";
+import { type DataRecord, initializeData, waitForData } from "./data/data";
 import { Binding } from "./data/useBinding";
 import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
 import { FromStates, State } from "./State";
@@ -65,7 +65,7 @@ function applyStringOrStateOrBinding(
 	initialize: (text: string) => void,
 ) {
 	if (value instanceof Binding) {
-		initializeData(element, {
+		waitForData(element, {
 			[value.key]: (data: any) => {
 				const isState = data instanceof State;
 				const stringOrState = isState

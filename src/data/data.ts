@@ -81,11 +81,10 @@ function resolveCallbacksByData(
 	}
 }
 
-export type DataRecord = Record<string, DataCallback | any>;
+export type DataRecord = Record<string, any>;
 export const nodeData = new NodeData();
 export function initializeData(element: Node, data: DataRecord | undefined) {
-	nodeData.addCallbacks(element, extractCallbackRecord(data));
-	nodeData.setDataRecord(element, extractDataValueRecord(data));
+	nodeData.setDataRecord(element, data);
 }
 
 export function extractCallbackRecord(
