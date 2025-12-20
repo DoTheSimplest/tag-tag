@@ -103,12 +103,6 @@ export function extractCallbackRecord(
 	return result;
 }
 
-export function createDescendantCallbacks(
-	record: Record<string, DataCallback> | undefined,
-) {
-	return extractCallbackRecord(record);
-}
-
 export function appendCallbacksRecord(
 	record1: Record<string, DataCallback[]>,
 	record2: Record<string, DataCallback[]> | undefined,
