@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { div, For, ForMap, useState } from "../../src";
+import { div, For, useState } from "../../src";
 
-describe(ForMap, () => {
+describe(For, () => {
 	it("conserve prev element", () => {
 		const items = useState([1, 2, 3]);
 		const element = div([div("0"), For(items, (item) => div(`${item}`))]);
