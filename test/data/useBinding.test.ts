@@ -97,7 +97,7 @@ describe("useBinding", () => {
 			counter++;
 		}
 		const child = div({
-			on: { click: useBinding("handleClick", (f) => f) },
+			on: { click: useBinding("handleClick") },
 		});
 		div({ data: { handleClick } }, [child]);
 		child.click();
