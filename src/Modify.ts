@@ -1,7 +1,7 @@
 import { type DataRecord, initializeData, waitForData } from "./data/data";
 import { Binding } from "./data/useBinding";
 import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
-import { FromStates, State } from "./State";
+import { State, useState } from "./State";
 
 type EventListenerType<
 	TEventType2Event,
@@ -70,7 +70,7 @@ function applyStringOrStateOrBinding(
 			[value.key]: (data: any) => {
 				const isState = data instanceof State;
 				const stringOrState = isState
-					? FromStates([data], () => value.map(data.get()))
+					? useState([data], () => value.map(data.get()))
 					: value.map(data);
 
 				applyStringOrState(stringOrState, initialize);
