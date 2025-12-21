@@ -154,7 +154,6 @@ describe("data", () => {
 			{
 				data: {
 					onClick: () => {
-						console.log("call");
 						counter++;
 					},
 				},
