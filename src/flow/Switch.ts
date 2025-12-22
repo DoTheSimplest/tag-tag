@@ -8,9 +8,35 @@ export function Switch<T>(
 	value: State<T>,
 	sections: SwitchSection<T>[],
 	createDefault?: () => Element,
+): ControlFlow;
+export function Switch(
+	value: State<string>,
+	sections: Record<string, () => Element>,
+	createDefault?: () => Element,
+): ControlFlow;
+export function Switch<T>(
+	value: State,
+	sections: SwitchSection<T>[] | Record<string, () => Element>,
+	createDefault?: () => Element,
 ): ControlFlow {
-	return new SwitchFlow(value, sections, createDefault);
+	if (Array.isArray(sections)) {
+		return new SwitchFlow(value, sections, createDefault);
+	}
+
+	return Switch(
+		value,
+		getKeys(sections).map((key) => ({ case: key, show: sections[key] })),
+		createDefault,
+	);
 }
+function getKeys<K extends keyof any>(record: Record<K, any>) {
+	const result = [] as K[];
+	for (const key in record) {
+		result.push(key);
+	}
+	return result;
+}
+
 export class SwitchFlow<T> extends ControlFlow {
 	#value: State<T>;
 	#sections: SwitchSection<T>[];

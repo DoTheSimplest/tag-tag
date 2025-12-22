@@ -25,4 +25,16 @@ describe(Switch, () => {
 		value.set(-2);
 		assert.equal(counter, 1);
 	});
+
+	it("init with Record<string, () => Element>", () => {
+		const value = useState("zero");
+		const element = div([
+			Switch(value, { zero: () => div("Zero"), one: () => div("One") }),
+		]);
+
+		assert.equal(element.childNodes[0].textContent, "Zero");
+
+		value.set("one");
+		assert.equal(element.childNodes[0].textContent, "One");
+	});
 });
