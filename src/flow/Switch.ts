@@ -25,16 +25,9 @@ export function Switch<T>(
 
 	return Switch(
 		value,
-		getKeys(sections).map((key) => ({ case: key, show: sections[key] })),
+		Object.keys(sections).map((key) => ({ case: key, show: sections[key] })),
 		createDefault,
 	);
-}
-function getKeys<K extends keyof any>(record: Record<K, any>) {
-	const result = [] as K[];
-	for (const key in record) {
-		result.push(key);
-	}
-	return result;
 }
 
 export class SwitchFlow<T> extends ControlFlow {
