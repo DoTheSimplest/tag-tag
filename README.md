@@ -97,11 +97,11 @@ function SwitchExample() {
 		button("Pentagon", { on: { click: () => state.set("pentagon") } }),
 		Switch(
 			state,
-			[
-				{ case: "triangle", show: () => div("▲") },
-				{ case: "rectangle", show: () => div("■") },
-				{ case: "circle", show: () => div("●") },
-			],
+			{
+				triangle: () => div("▲"),
+				rectangle: () => div("■"),
+				circle: () => div("●"),
+			},
 			() => div("?"),
 		),
 	]);
