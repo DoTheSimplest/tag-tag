@@ -118,6 +118,22 @@ function AttrExample() {
 document.body.appendChild(AttrExample());
 ```
 
+#### `prop` initializer
+[JSFiddle](https://jsfiddle.net/do_the_simplest/mc38ksqw/1/)
+
+```typescript
+import { option, select } from "tagu-tagu";
+
+// Element: setAttribute
+function AttrExample() {
+	return select([option("One"), option("Two"), option("Three")], {
+		prop: { selectedIndex: 1 },
+	});
+}
+
+document.body.appendChild(AttrExample());
+```
+
 ### `If`
 
 ```typescript
