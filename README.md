@@ -251,6 +251,7 @@ document.body.appendChild(InitializerCallbackExample());
 ```
 
 ### `If`
+[JSFiddle](https://jsfiddle.net/do_the_simplest/bxuqsh1d/19/)
 
 ```typescript
 import { div, If, input, span, useState } from "tagu-tagu";
