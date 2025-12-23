@@ -52,6 +52,25 @@ button("Hello!", {css: {background: "blue"}});
 button({css: {background: "blue"}}, "Hello!");
 ```
 
+#### Modify existing element
+You can use initializers for existing element.
+
+```typescript
+import { Modify } from "tagu-tagu";
+
+Modify(document.body, {
+	css: {
+		background: "skyblue",
+	},
+	on: {
+		click: () => {
+			document.body.textContent = "clicked!";
+		},
+	},
+});
+
+```
+
 ### `If`
 
 ```typescript
