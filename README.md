@@ -102,6 +102,22 @@ function CssExample() {
 document.body.appendChild(CssExample());
 ```
 
+#### `attr` initializer
+[JSFiddle](https://jsfiddle.net/do_the_simplest/r8a423pw/1/)
+
+```typescript
+import { input } from "tagu-tagu";
+
+// Element: setAttribute
+function AttrExample() {
+	return input({
+		attr: { type: "color" },
+	});
+}
+
+document.body.appendChild(AttrExample());
+```
+
 ### `If`
 
 ```typescript
