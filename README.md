@@ -347,6 +347,7 @@ document.body.appendChild(ForExample());
 
 ### Data binding
 You can use data of ancestors.
+[JSFiddle](https://jsfiddle.net/do_the_simplest/9u6oz2bc/6/)
 
 ```typescript
 import { button, div, useBinding, useState } from "tagu-tagu";
