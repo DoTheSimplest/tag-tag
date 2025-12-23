@@ -59,12 +59,13 @@ You can use initializers for existing element.
 import { Modify } from "tagu-tagu";
 
 Modify(document.body, {
+	text: "💣",
 	css: {
 		background: "skyblue",
 	},
 	on: {
 		click: () => {
-			document.body.textContent = "clicked!";
+			document.body.textContent = "💥";
 		},
 	},
 });
