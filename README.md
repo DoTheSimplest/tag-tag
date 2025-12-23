@@ -312,6 +312,7 @@ document.body.appendChild(SwitchExample());
 ```
 
 ### `For`
+[JSFiddle](https://jsfiddle.net/do_the_simplest/soLa9v6t/12/)
 
 ```typescript
 import { button, div, For, useState } from "tagu-tagu";
