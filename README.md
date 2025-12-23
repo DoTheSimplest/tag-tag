@@ -282,6 +282,7 @@ document.body.appendChild(IfExample());
 ```
 
 ### `Switch`
+[JSFiddle](https://jsfiddle.net/do_the_simplest/vw8hrz1t/8/)
 
 ```typescript
 import { button, div, Switch, useState } from "tagu-tagu";
