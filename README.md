@@ -314,7 +314,7 @@ function InitializerCallbackExample() {
 document.body.appendChild(InitializerCallbackExample());
 ```
 ### `If`
-[JSFiddle](https://jsfiddle.net/do_the_simplest/bxuqsh1d/20/)
+[JSFiddle](https://jsfiddle.net/do_the_simplest/bxuqsh1d/21/)
 
 ```typescript
 import { div, If, input, span, useState } from "tagu-tagu";
@@ -329,6 +329,7 @@ function IfExample() {
 	return div([
 		input({
 			attr: { type: "checkbox" },
+			prop: { checked: isVisible },
 			on: { click: toggle },
 		}),
 		If(isVisible, () =>
