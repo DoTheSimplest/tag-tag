@@ -51,6 +51,18 @@ button({css: {background: "blue"}}, "Hello!");
 ```
 
 #### Children initializer
+
+[JSFiddle](https://jsfiddle.net/do_the_simplest/q4kzphbr/1/)
+```typescript
+import { div } from "tagu-tagu";
+
+function ChildExample() {
+	return div("Hello");
+}
+
+document.body.appendChild(ChildExample());
+```
+
 [JSFiddle](https://jsfiddle.net/do_the_simplest/hx9mn4rg/1/)
 ```typescript
 import { button, div, h1 } from "tagu-tagu";
@@ -64,16 +76,6 @@ document.body.appendChild(ChildrenExample());
 
 ```
 
-[JSFiddle](https://jsfiddle.net/do_the_simplest/q4kzphbr/1/)
-```typescript
-import { div } from "tagu-tagu";
-
-function ChildExample() {
-	return div("Hello");
-}
-
-document.body.appendChild(ChildExample());
-```
 
 #### `html` initializer
 [JSFiddle](https://jsfiddle.net/do_the_simplest/6p9jh45L/2/)
