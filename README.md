@@ -332,6 +332,26 @@ function SimpleStateExample() {
 document.body.appendChild(SimpleStateExample());
 ```
 
+[JSFiddle](https://jsfiddle.net/do_the_simplest/by934m81/2/)
+```typescript
+import { button, div, useState } from "tagu-tagu";
+
+function StateFromStateExample() {
+	const count = useState(0);
+
+	function incrementCount() {
+		count.set(count.get() + 1);
+	}
+
+	return div([
+		div(useState(count, (n) => (n ? n : "Zero"))),
+		button("+", { on: { click: incrementCount } }),
+	]);
+}
+
+document.body.appendChild(StateFromStateExample());
+```
+
 
 ### `If`
 [JSFiddle](https://jsfiddle.net/do_the_simplest/bxuqsh1d/21/)
