@@ -86,6 +86,12 @@ export function br(...initializers: ElementInitializer<HTMLBRElement>[]) {
 	return Html("br", ...initializers);
 }
 
+export function th(
+	...initializers: ElementInitializer<HTMLTableCellElement>[]
+) {
+	return Html("th", ...initializers);
+}
+
 export function tr(...initializers: ElementInitializer<HTMLTableRowElement>[]) {
 	return Html("tr", ...initializers);
 }
