@@ -312,6 +312,25 @@ $$Example();
 ```
 [JSFiddle](https://jsfiddle.net/do_the_simplest/gqe5378t/1/)
 
+or you can use `ModifyAll`
+
+```typescript
+import { ModifyAll } from "tagu-tagu";
+
+function ModifyAllExample() {
+	ModifyAll("#fertilized button", {
+		on: {
+			click: (e) => {
+				(e.target as HTMLButtonElement).textContent = "🐣";
+			},
+		},
+	});
+}
+
+ModifyAllExample();
+```
+[JSFiddle](https://jsfiddle.net/do_the_simplest/fn10gzp4/6/)
+
 #### Callback initializer
 ```typescript
 import { button, div } from "tagu-tagu";
