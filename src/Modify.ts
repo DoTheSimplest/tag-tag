@@ -49,7 +49,7 @@ export type ElementInitializer<
 	| State
 	| ElementPropertyInitializer<TEventType2Event>
 	| ChildType[]
-	| ((element: TElement) => void);
+	| ((element: TElement) => any);
 
 export function applyStringOrState(
 	value: string | State,
@@ -256,7 +256,8 @@ function initialize<TElement extends Element, TEventType2Event>(
 	} else if (Array.isArray(initializer)) {
 		initializeChildBlock(element, initializer);
 	} else if (typeof initializer === "function") {
-		initializer(element);
+		const result = initializer(element);
+		if (result instanceof Promise) return result;
 	} else {
 		if (initializer.animate !== undefined) {
 			return initializePropertyInitializerWithAnimation(element, initializer);

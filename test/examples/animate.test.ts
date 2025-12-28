@@ -70,4 +70,20 @@ describe("animate", () => {
 			),
 		]);
 	});
+
+	it(`async callback`, () => {
+		Modify(document.body, { html: "" }, [
+			div(
+				"Hello!",
+				async () => {
+					await wait(1000);
+				},
+				{ text: "Completed" },
+			),
+		]);
+	});
 });
+
+async function wait(ms: number) {
+	return new Promise<void>((resolve) => setTimeout(resolve, ms));
+}
