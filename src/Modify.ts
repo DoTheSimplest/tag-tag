@@ -209,6 +209,27 @@ function initializePropertyInitializerWithoutAnimation<
 	initializeData(element, initializer.data);
 }
 
+function initializePropertyInitializerWithAnimation<
+	TElement extends Element,
+	TEventType2Event,
+>(
+	element: TElement,
+	initializer: ElementPropertyInitializer<TEventType2Event>,
+) {
+	const css = { ...(initializer.css ?? {}) };
+	for (const key in css) {
+		if (typeof css[key] !== "string") {
+			delete css[key];
+		}
+	}
+	const animation = element.animate([{}, css as Record<string, string>], {
+		duration: initializer.animate,
+	});
+	return animation.finished.then(() =>
+		initializePropertyInitializerWithoutAnimation(element, initializer),
+	);
+}
+
 function initialize<TElement extends Element, TEventType2Event>(
 	element: TElement | null,
 	initializer: ElementInitializer<TElement, TEventType2Event>,
@@ -222,18 +243,7 @@ function initialize<TElement extends Element, TEventType2Event>(
 		initializer(element);
 	} else {
 		if (initializer.animate) {
-			const css = { ...(initializer.css ?? {}) };
-			for (const key in css) {
-				if (typeof css[key] !== "string") {
-					delete css[key];
-				}
-			}
-			const animation = element.animate([{}, css as Record<string, string>], {
-				duration: initializer.animate,
-			});
-			return animation.finished.then(() =>
-				initializePropertyInitializerWithoutAnimation(element, initializer),
-			);
+			return initializePropertyInitializerWithAnimation(element, initializer);
 		}
 		initializePropertyInitializerWithoutAnimation(element, initializer);
 	}
