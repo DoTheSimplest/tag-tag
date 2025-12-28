@@ -33,7 +33,12 @@ type ElementPropertyInitializer<TEventType2Event> = {
 	$?: $Record;
 	$$?: $Record;
 	data?: DataRecord;
-	animate?: number | KeyframeAnimationOptions;
+	animate?: number | AnimationOptions;
+};
+
+type AnimationOptions = {
+	duration?: number;
+	easing?: string;
 };
 
 export type ElementInitializer<
