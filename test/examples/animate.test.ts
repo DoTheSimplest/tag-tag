@@ -45,16 +45,28 @@ describe("animate", () => {
 		]);
 	});
 
-	it(`animate: {easing: "swing"}`, () => {
+	it(`{ easing: undefined } is "swing"`, () => {
 		Modify(document.body, { html: "" }, [
 			div(
 				"Hello!",
 				{ css: { left: "0px", background: "blue", position: "absolute" } },
 				{
 					css: { left: "100px" },
-					animate: { duration: 1000, easing: "swing" },
+					animate: { duration: 1000 },
 				},
-				{ text: "Animation Finished" },
+			),
+		]);
+	});
+
+	it(`animate: { easing: "linear" }`, () => {
+		Modify(document.body, { html: "" }, [
+			div(
+				"Hello!",
+				{ css: { left: "0px", background: "blue", position: "absolute" } },
+				{
+					css: { left: "100px" },
+					animate: { duration: 1000, easing: "linear" },
+				},
 			),
 		]);
 	});
