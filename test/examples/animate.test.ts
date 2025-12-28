@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { div, Modify, useState } from "../../src";
+import { div, Modify, ModifyAsync, useState } from "../../src";
 
 describe("animate", () => {
 	it("simple duration", () => {
@@ -87,3 +87,38 @@ describe("animate", () => {
 async function wait(ms: number) {
 	return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
+
+describe(ModifyAsync, () => {
+	it(`animates multiple styles`, () => {
+		Modify(document.body, { html: "" }, [
+			div(
+				"Hello!",
+				{
+					css: {
+						width: "100px",
+						height: "100px",
+						background: "blue",
+						position: "absolute",
+						color: "white",
+					},
+				},
+				async (e) => {
+					await Promise.all([
+						ModifyAsync(e, {
+							css: { width: "200px" },
+							animate: { duration: 1000 },
+						}),
+
+						ModifyAsync(e, {
+							css: { height: "200px" },
+							animate: { duration: 500 },
+						}),
+					]);
+				},
+				{
+					text: "Finished!",
+				},
+			),
+		]);
+	});
+});

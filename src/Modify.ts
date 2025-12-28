@@ -293,3 +293,14 @@ export function ModifyAll(
 		Modify<Element>(element, ...initializers);
 	}
 }
+
+export function ModifyAsync<T extends Element>(
+	elementOrSelector: T | string,
+	...initializers: ElementInitializer<T>[]
+) {
+	return new Promise<T>((resolve) => {
+		Modify(elementOrSelector, ...initializers, (e) => {
+			resolve(e);
+		});
+	});
+}
