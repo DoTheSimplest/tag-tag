@@ -34,4 +34,14 @@ describe("animate", () => {
 			),
 		]);
 	});
+	it("animate: {duration: 1000}", () => {
+		Modify(document.body, { html: "" }, [
+			div(
+				"Hello!",
+				{ css: { background: "blue" } },
+				{ css: { background: "lime" }, animate: { duration: 1000 } },
+				{ text: "Animation Finished" },
+			),
+		]);
+	});
 });
