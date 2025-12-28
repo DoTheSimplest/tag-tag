@@ -24,7 +24,7 @@ describe("animate", () => {
 		]);
 	});
 
-	it("animate: {}", () => {
+	it("{}", () => {
 		Modify(document.body, { html: "" }, [
 			div(
 				"Hello!",
@@ -34,7 +34,7 @@ describe("animate", () => {
 			),
 		]);
 	});
-	it("animate: {duration: 1000}", () => {
+	it("{duration: 1000}", () => {
 		Modify(document.body, { html: "" }, [
 			div(
 				"Hello!",
@@ -58,7 +58,7 @@ describe("animate", () => {
 		]);
 	});
 
-	it(`animate: { easing: "linear" }`, () => {
+	it(`{ easing: "linear" }`, () => {
 		Modify(document.body, { html: "" }, [
 			div(
 				"Hello!",
