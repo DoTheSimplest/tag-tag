@@ -11,10 +11,12 @@ export class State<T = any> {
 		this.#dispatch();
 	}
 	#dispatch() {
-		this.#listeners.forEach(listener => listener());
+		this.#listeners.forEach((listener) => {
+			listener();
+		});
 	}
 
-	#listeners = new Set<()=>void>();
+	#listeners = new Set<() => void>();
 	on(listener: () => void) {
 		this.#listeners.add(listener);
 	}
@@ -29,7 +31,7 @@ export function useComputed<TSrc, TDest>(
 	state: State<TSrc>,
 	map: (value: TSrc) => TDest,
 ): State<TDest>;
-export function useComputed(value: any, map: any){
+export function useComputed(value: any, map: any) {
 	if (Array.isArray(value)) {
 		return fromStates(value, map);
 	}
@@ -42,7 +44,7 @@ function fromStates<T>(states: State[], createValue: () => T) {
 		result.set(createValue());
 	};
 	for (const state of states) {
-		state.on( update);
+		state.on(update);
 	}
 	return result;
 }
