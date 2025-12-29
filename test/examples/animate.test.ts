@@ -1,5 +1,6 @@
 import { describe, it } from "vitest";
 import { div, Modify, ModifyAsync, useState } from "../../src";
+import { wait } from "../wait";
 
 describe("animate", () => {
 	it("simple duration", () => {
@@ -83,10 +84,6 @@ describe("animate", () => {
 		]);
 	});
 });
-
-async function wait(ms: number) {
-	return new Promise<void>((resolve) => setTimeout(resolve, ms));
-}
 
 describe(ModifyAsync, () => {
 	it(`animates multiple styles`, () => {
