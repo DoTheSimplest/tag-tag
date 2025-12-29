@@ -154,10 +154,17 @@ function initializeProps(
 }
 
 function initialize$(element: Element, $: $Record | undefined) {
+	const promises = [] as Promise<void>[];
+
 	for (const selector in $) {
 		const selected = element.querySelector(selector);
-		if (selected) initialize(selected, $[selector]);
+		if (selected) {
+			const result = initialize(selected, $[selector]);
+			if (result instanceof Promise) promises.push(result);
+		}
 	}
+
+	if (promises.length !== 0) return Promise.all(promises);
 }
 
 function initialize$$(element: Element, $$: $Record | undefined) {
@@ -208,10 +215,11 @@ function initializePropertyInitializerWithoutAnimation<
 	initializeAttributes(element, initializer.attr);
 	initializeProps(element, initializer.prop);
 	initializeStyle(element, initializer.css);
-	initialize$(element, initializer.$);
+	const result$ = initialize$(element, initializer.$);
 	initialize$$(element, initializer.$$);
 	initializeEventListeners(element, initializer.on);
 	initializeData(element, initializer.data);
+	return result$;
 }
 
 function initializePropertyInitializerWithAnimation<
@@ -262,7 +270,7 @@ function initialize<TElement extends Element, TEventType2Event>(
 		if (initializer.animate !== undefined) {
 			return initializePropertyInitializerWithAnimation(element, initializer);
 		}
-		initializePropertyInitializerWithoutAnimation(element, initializer);
+		return initializePropertyInitializerWithoutAnimation(element, initializer);
 	}
 }
 
