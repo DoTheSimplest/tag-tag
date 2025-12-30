@@ -25,10 +25,10 @@ export function Html<K extends keyof HTMLElementTagNameMap>(
 	return result;
 }
 
-export function Tag(
+export function Tag<T extends Element=Element>(
 	html: string,
-	...initializers: ElementInitializer<Element>[]
+	...initializers: ElementInitializer<T>[]
 ) {
-	const result = div({ html: html }).children[0];
+	const result = div({ html: html }).children[0] as T;
 	return Modify(result, ...initializers);
 }
