@@ -1,22 +1,22 @@
 import { nodeData } from "../data/data";
 import { getNextNodeSibling } from "../initializeChildBlock";
-import type { State } from "../State";
+import { type Signal, useEffect } from "../signal/Signal";
 import { ControlFlow } from "./ControlFlow";
 
 export function If(
-	condition: State<boolean>,
+	condition: Signal<boolean>,
 	show: () => Element,
 	showElse?: () => Element,
 ): ControlFlow {
 	return new IfFlow(condition, show, showElse);
 }
 export class IfFlow extends ControlFlow {
-	#condition: State<boolean>;
+	#condition: Signal<boolean>;
 	#createThen: () => Element;
 	#createElse?: () => Element;
 
 	constructor(
-		condition: State<boolean>,
+		condition: Signal<boolean>,
 		create: () => Element,
 		createElse?: () => Element,
 	) {
@@ -54,8 +54,6 @@ export class IfFlow extends ControlFlow {
 			}
 		};
 
-		update();
-
-		this.#condition.on(update);
+		useEffect(update);
 	}
 }

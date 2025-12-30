@@ -1,4 +1,4 @@
-import { type State, useState } from '../State';
+import { type State, useEffect, useState } from "../../src";
 
 export type SwitchSection<TCase, TElement = Element> = {
 	case: TCase;
@@ -24,8 +24,6 @@ export function SwitchBlockState<TCase, TElement = Element>(
 		result.set(activated);
 	};
 
-	value.on(update);
-
-	update();
+	useEffect(update);
 	return result;
 }

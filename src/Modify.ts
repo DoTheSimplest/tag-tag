@@ -1,7 +1,7 @@
 import { type DataRecord, initializeData, waitForData } from "./data/data";
 import { Binding } from "./data/useBinding";
 import { type ChildType, initializeChildBlock } from "./initializeChildBlock";
-import { State, useComputed } from "./State";
+import { Signal, useComputed, useEffect } from "./signal/Signal";
 
 type EventListenerType<
 	TEventType2Event,
@@ -24,11 +24,11 @@ type $Record = Record<
 >;
 
 type ElementPropertyInitializer<TEventType2Event> = {
-	html?: string | State | Binding;
-	text?: string | State | Binding;
-	attr?: Record<string, string | State | Binding>;
-	prop?: Record<string, any | State | Binding>;
-	css?: Record<string, string | State | Binding>;
+	html?: string | Signal | Binding;
+	text?: string | Signal | Binding;
+	attr?: Record<string, string | Signal | Binding>;
+	prop?: Record<string, any | Signal | Binding>;
+	css?: Record<string, string | Signal | Binding>;
 	on?: EventListenerRecord<TEventType2Event>;
 	$?: $Record;
 	$$?: $Record;
@@ -46,23 +46,19 @@ export type ElementInitializer<
 	TEventType2Event = HTMLElementEventMap,
 > =
 	| string
-	| State
+	| Signal
 	| ElementPropertyInitializer<TEventType2Event>
 	| ChildType[]
 	| ((element: TElement) => any);
 
 export function applyStringOrState(
-	value: string | State,
+	value: string | Signal,
 	initialize: (text: string) => void,
 ) {
 	if (typeof value === "string") {
 		initialize(value);
-	} else if (value instanceof State) {
-		const update = () => {
-			initialize(value.get());
-		};
-		update();
-		value.on(update);
+	} else if (value instanceof Signal) {
+		useEffect(() => initialize(value.get()));
 	} else {
 		initialize(value);
 	}
@@ -70,15 +66,15 @@ export function applyStringOrState(
 
 function applyStringOrStateOrBinding(
 	element: Node,
-	value: string | State | Binding,
+	value: string | Signal | Binding,
 	initialize: (text: string) => void,
 ) {
 	if (value instanceof Binding) {
 		waitForData(element, {
 			[value.key]: (data: any) => {
-				const isState = data instanceof State;
+				const isState = data instanceof Signal;
 				const stringOrState = isState
-					? useComputed([data], () => value.map(data.get()))
+					? useComputed(() => value.map(data.get()))
 					: value.map(data);
 
 				applyStringOrState(stringOrState, initialize);
@@ -91,7 +87,7 @@ function applyStringOrStateOrBinding(
 
 function initializeHtml(
 	element: Element,
-	html: string | State | Binding | undefined,
+	html: string | Signal | Binding | undefined,
 ) {
 	if (html !== undefined) {
 		applyStringOrStateOrBinding(element, html, (text) => {
@@ -102,7 +98,7 @@ function initializeHtml(
 
 function initializeText(
 	node: Node,
-	text: string | State | Binding | undefined,
+	text: string | Signal | Binding | undefined,
 ) {
 	if (text !== undefined) {
 		applyStringOrStateOrBinding(node, text, (text) => {
@@ -113,7 +109,7 @@ function initializeText(
 
 function initializeStyle(
 	element: Element,
-	css: Record<string, string | State | Binding> | undefined,
+	css: Record<string, string | Signal | Binding> | undefined,
 ) {
 	const style = (element as any).style;
 	if (!(style instanceof CSSStyleDeclaration)) return;
@@ -128,7 +124,7 @@ function initializeStyle(
 
 function initializeAttributes(
 	element: Element,
-	attr: Record<string, string | State | Binding> | undefined,
+	attr: Record<string, string | Signal | Binding> | undefined,
 ) {
 	for (const attrName in attr) {
 		const value = attr[attrName];
@@ -143,7 +139,7 @@ function initializeAttributes(
 
 function initializeProps(
 	element: Node,
-	prop: Record<string, any | State | Binding> | undefined,
+	prop: Record<string, any | Signal | Binding> | undefined,
 ) {
 	for (const key in prop) {
 		const value = prop[key];
@@ -241,7 +237,7 @@ function initializePropertyInitializerWithOwnAnimation<
 		if (typeof value === "string") {
 			css[key] = value;
 		}
-		if (value instanceof State) {
+		if (value instanceof Signal) {
 			css[key] = value.get();
 		}
 	}
@@ -278,7 +274,7 @@ function initialize<TElement extends Element, TEventType2Event>(
 	initializer: ElementInitializer<TElement, TEventType2Event>,
 ) {
 	if (!element) return;
-	if (typeof initializer === "string" || initializer instanceof State) {
+	if (typeof initializer === "string" || initializer instanceof Signal) {
 		initializeText(element, initializer);
 	} else if (Array.isArray(initializer)) {
 		initializeChildBlock(element, initializer);

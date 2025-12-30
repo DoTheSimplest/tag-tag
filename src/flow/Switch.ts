@@ -1,21 +1,22 @@
 import { nodeData } from "../data/data";
 import { getNextNodeSibling } from "../initializeChildBlock";
-import type { State } from "../State";
+import { type Signal, useEffect } from "../signal/Signal";
+
 import { ControlFlow } from "./ControlFlow";
 import type { SwitchSection } from "./SwitchBlockState";
 
 export function Switch<T>(
-	value: State<T>,
+	value: Signal<T>,
 	sections: SwitchSection<T>[],
 	createDefault?: () => Element,
 ): ControlFlow;
 export function Switch(
-	value: State<string>,
+	value: Signal<string>,
 	sections: Record<string, () => Element>,
 	createDefault?: () => Element,
 ): ControlFlow;
 export function Switch<T>(
-	value: State,
+	value: Signal,
 	sections: SwitchSection<T>[] | Record<string, () => Element>,
 	createDefault?: () => Element,
 ): ControlFlow {
@@ -31,12 +32,12 @@ export function Switch<T>(
 }
 
 export class SwitchFlow<T> extends ControlFlow {
-	#value: State<T>;
+	#value: Signal<T>;
 	#sections: SwitchSection<T>[];
 	#createDefault?: () => Element;
 
 	constructor(
-		value: State<T>,
+		value: Signal<T>,
 		sections: SwitchSection<T>[],
 		createDefault?: () => Element,
 	) {
@@ -88,8 +89,6 @@ export class SwitchFlow<T> extends ControlFlow {
 			currentElement = newElement;
 		};
 
-		update();
-
-		this.#value.on(update);
+		useEffect(update);
 	}
 }

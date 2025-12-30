@@ -1,10 +1,10 @@
 import { nodeData } from "../data/data";
 import { getNextNodeSibling } from "../initializeChildBlock";
-import type { State } from "../State";
+import { type Signal, useEffect } from "../signal/Signal";
 import { ControlFlow } from "./ControlFlow";
 
 export function For<T>(
-	array: State<readonly T[]>,
+	array: Signal<readonly T[]>,
 	map: (value: T) => Node | string,
 ): ControlFlow {
 	return new ForMap(array, map);
@@ -12,7 +12,7 @@ export function For<T>(
 
 export class ForMap<T> extends ControlFlow {
 	constructor(
-		private list: State<readonly T[]>,
+		private list: Signal<readonly T[]>,
 		private map: (value: T) => Node | string,
 	) {
 		super();
@@ -74,9 +74,6 @@ export class ForMap<T> extends ControlFlow {
 			this.firstNode = model2View.get(this.list.get()[0]) ?? null;
 		};
 
-		updateListUI();
-		this.list.on(() => {
-			updateListUI();
-		});
+		useEffect(updateListUI);
 	}
 }

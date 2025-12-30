@@ -1,9 +1,9 @@
 import { nodeData } from "./data/data";
 import { ControlFlow } from "./flow/ControlFlow";
 import { applyStringOrState } from "./Modify";
-import { State } from "./State";
+import { Signal } from "./signal/Signal";
 
-export type ChildType = Node | string | State | ControlFlow;
+export type ChildType = Node | string | Signal | ControlFlow;
 export function initializeChildBlock(element: Element, children: ChildType[]) {
 	const resolvedChildren = resolveTextNode(children);
 	connectNeighbours(resolvedChildren);
@@ -24,7 +24,7 @@ function initializeChild(element: Element, child: ControlFlow | Node) {
 
 export function resolveTextNode(children: ChildType[]): (Node | ControlFlow)[] {
 	return children.map((c) => {
-		if (typeof c === "string" || c instanceof State) {
+		if (typeof c === "string" || c instanceof Signal) {
 			const textNode = document.createTextNode("");
 			applyStringOrState(c, (text) => {
 				textNode.textContent = text;

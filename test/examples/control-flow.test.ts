@@ -1,9 +1,9 @@
 import { describe, it } from "vitest";
+import { useState } from "../../src";
 import { button, div, input, span } from "../../src/Elements";
 import { If } from "../../src/flow/If";
 import { Switch } from "../../src/flow/Switch";
 import { Modify } from "../../src/Modify";
-import { useState } from "../../src/State";
 
 describe("control-flow", () => {
 	it("If then", () => {
