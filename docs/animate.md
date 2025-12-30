@@ -18,3 +18,5 @@ function AnimateExample() {
 
 document.body.appendChild(AnimateExample());
 ```
+
+[JSFiddle](https://jsfiddle.net/do_the_simplest/Lba9qpmf/1/)
