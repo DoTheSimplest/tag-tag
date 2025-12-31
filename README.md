@@ -195,11 +195,11 @@ function DataFromParentExample() {
 	const parent = div();
 	const element = div({ data: { "my-data-key": "Hello World!" } });
 	const child = div();
-	waitForData(parent, "my-data-key").then(() => {
-		parent.textContent = "Parent"; // never
+	waitForData(parent, "my-data-key").then((data) => {
+		parent.textContent = `Parent: ${data}`; // never
 	});
-	waitForData(child, "my-data-key").then(() => {
-		child.textContent = "Child"; // displayed
+	waitForData(child, "my-data-key").then((data) => {
+		child.textContent = `Child: ${data}`; // displayed
 	});
 	return Modify(parent, [Modify(element, [child])]);
 }
