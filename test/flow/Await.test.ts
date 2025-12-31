@@ -14,6 +14,7 @@ describe(Await, () => {
 					span(() => {
 						log.push("Loading...");
 					}),
+				fulfilled: () => span(),
 			}),
 		]);
 		assert.deepEqual(log, ["Loading..."]);
@@ -47,6 +48,7 @@ describe(Await, () => {
 		await new Promise<void>((resolve) =>
 			div([
 				Await(func(), {
+					fulfilled: () => span(),
 					rejected: (error) =>
 						span(() => {
 							log.push("rejected", error);
@@ -78,6 +80,19 @@ describe(Await, () => {
 				["Loading..."],
 			);
 		});
+		assert.deepEqual(
+			[...element.children].map((c) => c.textContent),
+			["value from func()"],
+		);
+	});
+
+	it("Promise Element", async () => {
+		async function func() {
+			await sleep(0);
+			return span("value from func()");
+		}
+		const element = div([Await(func())]);
+		await sleep(0);
 		assert.deepEqual(
 			[...element.children].map((c) => c.textContent),
 			["value from func()"],

@@ -1,6 +1,22 @@
 import { useState } from "../signal/Signal";
+import type { ControlFlow } from "./ControlFlow";
 import { Switch } from "./Switch";
 
+export function Await(
+	promise: Promise<Element>,
+	options?: {
+		pending?: () => Element;
+		rejected?: (error: any) => Element;
+	},
+): ControlFlow;
+export function Await<T>(
+	promise: Promise<T>,
+	options?: {
+		pending?: () => Element;
+		fulfilled: (value: T) => Element;
+		rejected?: (error: any) => Element;
+	},
+): ControlFlow;
 export function Await<T>(
 	promise: Promise<T>,
 	options?: {
@@ -31,9 +47,10 @@ export function Await<T>(
 	if (options?.pending) {
 		switchOptions[pending] = options.pending;
 	}
-	if (options?.fulfilled) {
-		switchOptions[fulfilled] = () => options.fulfilled!(value);
-	}
+
+	switchOptions[fulfilled] = () =>
+		options?.fulfilled?.(value) ?? (value as Element);
+
 	if (options?.rejected) {
 		switchOptions[rejected] = () => options.rejected!(error);
 	}
