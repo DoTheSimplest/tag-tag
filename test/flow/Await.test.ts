@@ -57,4 +57,30 @@ describe(Await, () => {
 		);
 		assert.deepEqual(log, ["rejected", "Error!"]);
 	});
+
+	it("pending -> fulfilled", async () => {
+		async function func() {
+			await sleep(1);
+			return "value from func()";
+		}
+		const element = await new Promise<HTMLElement>((resolve) => {
+			const element = div([
+				Await(func(), {
+					pending: () => span("Loading..."),
+					fulfilled: (value) =>
+						span(value, () => {
+							resolve(element);
+						}),
+				}),
+			]);
+			assert.deepEqual(
+				[...element.children].map((c) => c.textContent),
+				["Loading..."],
+			);
+		});
+		assert.deepEqual(
+			[...element.children].map((c) => c.textContent),
+			["value from func()"],
+		);
+	});
 });
