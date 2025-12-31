@@ -23,19 +23,16 @@ export function Await<T>(
 			promiseState.set("rejected");
 		});
 
-	const switchOptions = {
-		pending: options?.pending,
-	} as Record<string, () => Element>;
+	const switchOptions = {} as Record<string, () => Element>;
 
+	if (options?.pending) {
+		switchOptions.pending = options.pending;
+	}
 	if (options?.fulfilled) {
 		switchOptions.fulfilled = () => options.fulfilled!(value);
 	}
 	if (options?.rejected) {
 		switchOptions.rejected = () => options.rejected!(error);
-	}
-
-	for (const key in switchOptions) {
-		if (!switchOptions[key]) delete switchOptions[key];
 	}
 
 	return Switch(promiseState, switchOptions);
