@@ -574,6 +574,28 @@ document.body.appendChild(ForExample());
 ```
 [JSFiddle](https://jsfiddle.net/do_the_simplest/soLa9v6t/12/)
 
+### `Await`
+
+```typescript
+import { div, span, Await, sleep } from "tagu-tagu";
+
+function AwaitExample() {
+	async function asyncFunction(){
+		await sleep(2000);
+		return "Finished!";
+	}
+	
+	return div([
+		Await(asyncFunction(), {
+			pending: () => span("Loading..."),
+			fulfilled: (value) => span(value)
+		})
+	]);
+}
+
+document.body.appendChild(AwaitExample());
+```
+
 ### Data binding
 You can use data of ancestors.
 
