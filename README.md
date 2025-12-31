@@ -595,7 +595,7 @@ function AwaitExample() {
 
 document.body.appendChild(AwaitExample());
 ```
-[JSFiddle](https://jsfiddle.net/do_the_simplest/b367kv1h/1/)
+[JSFiddle](https://jsfiddle.net/do_the_simplest/b367kv1h/2/)
 
 #### `Promise<Element>`
 
