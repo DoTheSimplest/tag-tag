@@ -18,4 +18,24 @@ describe(Await, () => {
 		]);
 		assert.deepEqual(log, ["Loading..."]);
 	});
+
+	it("fulfilled", async () => {
+		async function func() {
+			await sleep(1);
+			return "value from func()";
+		}
+		const log = [] as string[];
+		await new Promise<void>((resolve) =>
+			div([
+				Await(func(), {
+					fulfilled: (value) =>
+						span(() => {
+							log.push("fulfilled", value);
+							resolve();
+						}),
+				}),
+			]),
+		);
+		assert.deepEqual(log, ["fulfilled", "value from func()"]);
+	});
 });
