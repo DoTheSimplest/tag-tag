@@ -654,6 +654,8 @@ function AwaitPromiseOfElementInElementExample() {
 document.body.appendChild(AwaitPromiseOfElementInElementExample());
 ```
 
+[JSFiddle](https://jsfiddle.net/do_the_simplest/3xyfjvt2/2/)
+
 
 ### Data binding
 You can use data of ancestors.
