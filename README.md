@@ -263,7 +263,7 @@ Modify("form", {
 	},
 });
 ```
-[JSFiddle](https://jsfiddle.net/do_the_simplest/b8roj7wx/1/)
+[JSFiddle](https://jsfiddle.net/do_the_simplest/b8roj7wx/2/)
 
 #### `$$` initializer
 ```html
