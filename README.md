@@ -585,6 +585,28 @@ document.body.appendChild(AwaitExample());
 ```
 [JSFiddle](https://jsfiddle.net/do_the_simplest/b367kv1h/2/)
 
+#### `rejected`
+```typescript
+import { Await, div, sleep, span } from "tagu-tagu";
+
+async function PromiseComponent() {
+	await sleep(2000);
+	throw "Error!";
+}
+
+function AwaitRejectExample() {
+	return div([
+		Await(PromiseComponent(), {
+			pending: () => span("Loading..."),
+			fulfilled: () => span(),
+			rejected: (error) => span(error),
+		}),
+	]);
+}
+
+document.body.appendChild(AwaitRejectExample());
+```
+
 #### `Promise<Element>`
 
 ```typescript
