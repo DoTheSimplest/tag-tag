@@ -243,29 +243,25 @@ Modify(document.body, {
 import { Modify, style } from "tagu-tagu";
 
 // Element: querySelector
-function $Example() {
-	Modify("form", {
-		$: {
-			"#name": { prop: { defaultValue: "Einstein" } },
-			"#age": { attr: { type: "number" }, prop: { defaultValue: 26 } },
-			"#submit": [
-				style({
-					"#submit": {
-						background: "blue",
-						color: "white",
-						border: "none",
-						"border-radius": "10px",
-					},
-					"#submit:hover": {
-						background: "skyblue",
-					},
-				}),
-			],
-		},
-	});
-}
-
-$Example();
+Modify("form", {
+	$: {
+		"#name": { prop: { defaultValue: "Einstein" } },
+		"#age": { attr: { type: "number" }, prop: { defaultValue: 26 } },
+		"#submit": [
+			style({
+				"#submit": {
+					background: "blue",
+					color: "white",
+					border: "none",
+					"border-radius": "10px",
+				},
+				"#submit:hover": {
+					background: "skyblue",
+				},
+			}),
+		],
+	},
+});
 ```
 [JSFiddle](https://jsfiddle.net/do_the_simplest/b8roj7wx/1/)
 
