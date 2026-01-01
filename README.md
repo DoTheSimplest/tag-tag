@@ -317,7 +317,7 @@ ModifyAll("#fertilized button", {
 	},
 });
 ```
-[JSFiddle](https://jsfiddle.net/do_the_simplest/fn10gzp4/6/)
+[JSFiddle](https://jsfiddle.net/do_the_simplest/fn10gzp4/7/)
 
 #### Callback initializer
 ```typescript
