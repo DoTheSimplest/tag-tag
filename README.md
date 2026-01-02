@@ -690,3 +690,16 @@ document.body.appendChild(DataBindingExample());
 
 ## Seamless migration
 Since `tagu-tagu` is just a helper, you can migrate from anywhere.
+
+## Comparison
+|jquery|tagu-tagu|
+|-----|------|
+|`$(element).text("Hello")`|`Modify(element, { text: "Hello" })`|
+|`$(element).html("<button>click</button>")`|`Modify(element, { html: "<button>click</button>" })`|
+|`$(element).css("background", "blue")`|`Modify(element, { css: { background: "blue" } })`|
+|`$(element).attr("id", "element-id")`|`Modify(element, { attr: { id: "element-id" } })`|
+|`$(element).prop("checked", true)`|`Modify(element, { prop: { checked: true } })`|
+|`$(element).on("click", handleClick)`|`Modify(element, { on: { click: handleClick } })`|
+|`$(element).data("answer", 42)`|`Modify(element, { data: { answer: 42} })`|
+|`$(element).find("button").text("Hello")`|`Modify(element, { $$: { button: { text: "Hello" } } })`|
+|`$(element).animate({ width: "50%"}, 1000).animate({ fontSize: "32px" }, 1000)`|`Modify(element, { css: { width: "50%" }, animate: 1000 }, { css: { "font-size": "32px" }, animate: 1000 })`|
