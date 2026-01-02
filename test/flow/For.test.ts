@@ -43,4 +43,26 @@ describe(For, () => {
 			"Last",
 		]);
 	});
+
+	it("Sorted", () => {
+		testFor([1, 2, 3, 4, 5], [1, 2, 3, 5, 4]);
+	});
+
+	it("Reversed", () => {
+		testFor([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]);
+	});
+
+	it("Head <-> Tail", () => {
+		testFor([1, 2, 3, 4, 5], [5, 2, 3, 4, 1]);
+	});
 });
+
+function testFor<T>(initial: T[], modified: T[]) {
+	const items = useState(initial);
+	const element = div([For(items, (item) => div(`${item}`)), div("Last")]);
+	items.set(modified);
+	expect([...element.childNodes].map((c) => c.textContent)).toEqual([
+		...modified.map((m) => `${m}`),
+		"Last",
+	]);
+}
