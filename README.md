@@ -703,3 +703,8 @@ Since `tagu-tagu` is just a helper, you can migrate from anywhere.
 |`$(element).data("answer", 42)`|`Modify(element, { data: { answer: 42} })`|
 |`$(element).find("button").text("Hello")`|`Modify(element, { $$: { button: { text: "Hello" } } })`|
 |`$(element).animate({ width: "50%"}, 1000).animate({ fontSize: "32px" }, 1000)`|`Modify(element, { css: { width: "50%" }, animate: 1000 }, { css: { "font-size": "32px" }, animate: 1000 })`|
+
+|react|tagu-tagu|
+|---|---|
+|`const [counter, setCounter] = useState(0);` | `const counter = useState(0);` 🚦|
+|`useEffect(() => { console.log(counter); }, [counter])` | `useEffect(() => { console.log(counter.get()); })` 🚦|
