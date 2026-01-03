@@ -16,7 +16,7 @@
 		"type": "git",
 		"url": "git+https://github.com/DoTheSimplest/tagu-tagu.git"
 	},
-	"author": "DoTheSimmplest",
+	"author": "DoTheSimplest",
 	"type": "module",
 	"main": "src/index.ts",
 	"files": [
