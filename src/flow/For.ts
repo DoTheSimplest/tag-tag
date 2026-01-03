@@ -69,9 +69,9 @@ export class ForMap<T> extends ControlFlow {
 				element.insertBefore(firstView, next);
 			}
 			for (let i = 0; i < modelArray.length - 1; i++) {
-				const node = model2View.get(modelArray[i])!;
+				const prev = model2View.get(modelArray[i])!;
 				const expected = model2View.get(modelArray[i + 1])!;
-				const actual = node?.nextSibling;
+				const actual = prev?.nextSibling;
 				if (expected !== actual) {
 					element.insertBefore(expected, actual);
 				}
