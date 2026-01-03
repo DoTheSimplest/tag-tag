@@ -16,6 +16,18 @@ export function Svg<K extends keyof SVGElementTagNameMap>(
 	return Modify(result, ...initializers);
 }
 
+/**
+ * Create a plain HTMLElement with initializers applied.
+ *
+ * Shorthand for `document.createElement(tagName)` + `Modify`.
+ *
+ * @param tagName - Tag name such as "div", "span", "button".
+ * @param initializers - Element initializers (attributes, children, etc).
+ * @returns The created HTMLElement.
+ *
+ * @example
+ * const btn = Html("button", "Click", { on: { click: () => alert("hi") } });
+ */
 export function Html<K extends keyof HTMLElementTagNameMap>(
 	tagName: K,
 	...initializers: ElementInitializer<HTMLElementTagNameMap[K]>[]
@@ -25,7 +37,7 @@ export function Html<K extends keyof HTMLElementTagNameMap>(
 	return result;
 }
 
-export function Tag<T extends Element=Element>(
+export function Tag<T extends Element = Element>(
 	html: string,
 	...initializers: ElementInitializer<T>[]
 ) {
