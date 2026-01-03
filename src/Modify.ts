@@ -130,8 +130,9 @@ function initializeAttributes(
 	for (const attrName in attr) {
 		const value = attr[attrName];
 		applyStringOrStateOrBinding(element, value, (text) => {
-			if (!text) element.removeAttribute(attrName);
-			else {
+			if (text === undefined || text === null || text === "") {
+				element.removeAttribute(attrName);
+			} else {
 				element.setAttribute(attrName, text);
 			}
 		});
