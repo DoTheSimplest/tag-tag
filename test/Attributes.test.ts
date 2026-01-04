@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { div, Modify, useState } from "../src";
+import { $, div, useState } from "../src";
 
 describe("initializeAttributes (coercion & signals)", () => {
 	it("coerces number/boolean to string and preserves '0' and 'false'", () => {
@@ -45,7 +45,7 @@ describe("initializeAttributes (coercion & signals)", () => {
 		expect(el.getAttribute("data-a")).toBe("1");
 
 		// Update via Modify to empty string; should remove attribute
-		Modify(el, { attr: { "data-a": "" } });
+		$(el, { attr: { "data-a": "" } });
 		await Promise.resolve();
 		expect(el.hasAttribute("data-a")).toBe(false);
 	});
