@@ -263,7 +263,7 @@ $("form", {
 	},
 });
 ```
-[JSFiddle](https://jsfiddle.net/do_the_simplest/b8roj7wx/2/)
+[JSFiddle](https://jsfiddle.net/do_the_simplest/b8roj7wx/4/)
 
 #### `$$` initializer
 ```html
